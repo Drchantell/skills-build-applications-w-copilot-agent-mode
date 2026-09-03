@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../config/api';
 import { parseApiResponse } from '../utils/parseApiResponse';
 
 function Teams() {
@@ -7,7 +6,10 @@ function Teams() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `${getApiBaseUrl()}/teams/`;
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const apiUrl = codespaceName
+      ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/teams/`
+      : '/api/teams/';
 
     fetch(apiUrl)
       .then((response) => response.json())

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../config/api';
 import { parseApiResponse } from '../utils/parseApiResponse';
 
 function Leaderboard() {
@@ -7,7 +6,10 @@ function Leaderboard() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `${getApiBaseUrl()}/leaderboard/`;
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const apiUrl = codespaceName
+      ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`
+      : '/api/leaderboard/';
 
     fetch(apiUrl)
       .then((response) => response.json())
