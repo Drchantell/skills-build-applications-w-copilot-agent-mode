@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../config/api';
 import { parseApiResponse } from '../utils/parseApiResponse';
 
 function Activities() {
@@ -7,7 +6,10 @@ function Activities() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const apiUrl = `${getApiBaseUrl()}/activities/`;
+    const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+    const apiUrl = codespaceName
+      ? `https://${import.meta.env.VITE_CODESPACE_NAME}-8000.app.github.dev/api/activities/`
+      : '/api/activities/';
 
     fetch(apiUrl)
       .then((response) => response.json())
